@@ -45,10 +45,10 @@
 
     </div>
 
-    <div class="containe">
+    <div class="body__bars--container">
       <div
         v-for="(item, index) in array"
-        class="bar"
+        class="body__bars--bar"
         :key="item"
         :style="{
           height: `${5.5*item}px`,
@@ -285,6 +285,7 @@ export default {
 }
 .header {
   display: flex;
+
   width: 100vw;
   padding: 20px 50px;
 }
@@ -300,30 +301,24 @@ export default {
 }
 
 .header__container--algorithms {
-  justify-self: center;
   margin-left: 200px;
 }
 .header__item--algorithm {
   margin: 5px;
 }
 
-.containe {
-  margin: auto;
-  height: 80%;
-  width: 80%;
+.body__bars--container {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
+
+  height: 80%;
+  width: 80%;
+
+  margin: auto;
   padding: 10px;
-  /* border: 2px solid grey; */
-  /* border-radius: 10px; */
 }
-.bar {
-  /* background-color: black; */
+.body__bars--bar {
   min-width: 10px;
 }
-/*
-#899097
-#6c757d
- */
 </style>
