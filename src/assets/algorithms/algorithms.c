@@ -63,8 +63,6 @@ void insertionSort(int n, int array[]) {
   }
 }
 
-#include <stdlib.h>
-
 void mergeSort(int n, int array[]) {
   if (n == 1) return; // sorted 
   

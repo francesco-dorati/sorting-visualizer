@@ -112,6 +112,7 @@ export default {
         blue: [],
       },
       sorting: false,
+      speed: 5,
     };
   },
 
@@ -168,8 +169,6 @@ export default {
     },
 
     async bubbleSort() {
-      const time = 5;
-
       let swaps = -1;
       let sorted = this.array.length - 1;
 
@@ -181,38 +180,21 @@ export default {
           this.colors.red = [];
           this.colors.red.push(i, i + 1);
 
-          await this.sleep(time);
-
           if (this.array[i] > this.array[i + 1]) {
             this.array.splice(i, 2, this.array[i + 1], this.array[i]);
             swaps += 1;
           }
+
+          await this.sleep();
         }
         this.colors.green.push(sorted);
         sorted -= 1;
       }
 
-      this.colors.green = [];
-
-      // End Animation
-      // for (let i = 0; i < this.array.length; i += 1) {
-      //   this.colors.red = [];
-      //   this.colors.red.push(i, i + 1);
-      //   await this.sleep(time);
-      // }
-      for (let i = 0; i < this.array.length; i += 1) {
-        this.colors.red = [];
-        this.colors.red.push(i, i + 1);
-        this.colors.green.push(i);
-        await this.sleep(time);
-      }
-
-      this.colors.red = [];
+      this.endAnimation();
     },
 
     async selectionSort() {
-      const time = 5;
-
       for (let i = 0; i < this.array.length; i += 1) {
         let m = i;
 
@@ -229,7 +211,7 @@ export default {
             this.colors.blue.splice(0, 1, m);
           }
 
-          await this.sleep(time);
+          await this.sleep();
         }
 
         const tmp = this.array[m];
@@ -238,29 +220,53 @@ export default {
 
         this.colors.green.push(i);
       }
-      this.colors.blue = [];
 
-      // End Animation
+      this.endAnimation();
+    },
+
+    async insertionSort() {
+      this.colors.green = [0];
+
+      for (let i = 1; i < this.array.length; i += 1) {
+        for (let j = i - 1; j >= 0; j -= 1) {
+          if (!this.sorting) return;
+
+          this.colors.green.push(i);
+
+          if (this.array[j + 1] < this.array[j]) {
+            this.array.splice(j, 2, this.array[j + 1], this.array[j]);
+          } else {
+            break;
+          }
+
+          this.colors.red.splice(0, 1, j);
+          await this.sleep();
+        }
+      }
+
+      this.endAnimation();
+    },
+
+    async mergeSort() {
+      console.log('merge');
+    },
+
+    async endAnimation() {
+      this.colors.blue = [];
       this.colors.green = [];
+
       for (let i = 0; i < this.array.length; i += 1) {
         this.colors.red = [];
         this.colors.green.push(i);
         this.colors.red.splice(0, 1, i);
-        await this.sleep(time);
+        await this.sleep();
       }
+
       this.colors.red = [];
     },
 
-    insertionSort() {
-      console.log('insertion');
-    },
-
-    mergeSort() {
-      console.log('merge');
-    },
-
-    sleep(t) {
-      return new Promise((resolve) => setTimeout(resolve, t));
+    sleep() {
+      return new Promise((resolve) => setTimeout(resolve, this.speed));
     },
   },
 
