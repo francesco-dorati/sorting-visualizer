@@ -24,13 +24,12 @@
 
         </blockquote>
 
-        <b-tabs class="sidebar__code" content-class="mt-3">
+        <b-tabs class="sidebar__code" content-class="mt-3" v-model="active">
           <b-tab
             v-for="(language, index) in current.languages"
             :class="`sidebar__code--tab sidebar__code--${language}`"
             :key="index"
             :title="language"
-            active
           >
              <!-- ADD OVERFLOW SCROLL -->
             <AlgorithmCode :algorithm="current.id" :language="index"/>
@@ -100,6 +99,7 @@ export default {
           languages: ['C', 'Python', 'JavaScript'],
         },
       ],
+      active: 0,
     };
   },
 

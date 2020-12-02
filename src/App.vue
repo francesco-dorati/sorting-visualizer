@@ -14,11 +14,11 @@
 
         <b-button
           class="header__button--action header__button--start"
-          variant="success"
-          @click="start()"
+          :variant="sorting ? 'danger' : 'success'"
+          @click="sorting ? stop() : start()"
         >
-          <b-icon icon="play-fill"></b-icon>
-          Start
+          <b-icon :icon="sorting ? 'x-octagon-fill' : 'play-fill'"></b-icon>
+          {{ sorting ? 'Stop' : 'Start' }}
         </b-button>
 
         <b-button
@@ -45,7 +45,27 @@
 
     </div>
 
-    {{ array }}
+    <div class="containe">
+      <!-- <span
+        v-for="item in array"
+        :key="item"
+        :style="{width: '5px', height: `${item*5}px`, margin: '0 2px', color: 'black'}"
+      >
+
+      </span> -->
+      <div
+        v-for="(item, index) in array"
+        class="bar"
+        :key="item"
+        :style="{
+          height: `${5.5*item}px`,
+          backgroundColor: colors.red.includes(index) ?
+            '#dc3545' : colors.green.includes(index) ?
+              '#28a745' : '#6c757d',
+        }"
+      >
+      </div>
+    </div>
 
     <SideBar :algorithmsProp="algorithms" :selected="selected"/>
 
@@ -53,14 +73,12 @@
 </template>
 
 <script>
+/* eslint-disable no-await-in-loop */
 import SideBar from './components/SideBar.vue';
 /*
 TODO
 - change from class to css
 - add dark theme
-
-IDEAS
-- add description and code impementation
 
 */
 
@@ -93,6 +111,11 @@ export default {
       ],
       selected: 0,
       array: [],
+      colors: {
+        green: [],
+        red: [],
+      },
+      sorting: false,
     };
   },
 
@@ -105,10 +128,92 @@ export default {
 
     randomizeArray() {
       this.array.sort(() => Math.random() - 0.5);
+      this.colors.red = [];
+      this.colors.green = [];
     },
 
     start() {
       //
+      // this.array.sort((a, b) => a - b);
+      if (!this.sorting) {
+        this.sorting = true;
+        switch (this.selected) {
+          case 0:
+            this.bubbleSort();
+            break;
+          case 1:
+            this.selectionSort();
+            break;
+          case 2:
+            this.insertionSort();
+            break;
+          case 3:
+            this.mergeSort();
+            break;
+          default:
+        }
+      }
+    },
+
+    stop() {
+      this.sorting = false;
+    },
+
+    async bubbleSort() {
+      const time = 5;
+
+      this.colors.green = [];
+      this.colors.red = [];
+
+      let swaps = -1;
+      let sorted = this.array.length - 1;
+
+      while (swaps !== 0) {
+        swaps = 0;
+        for (let i = 0; i < sorted; i += 1) {
+          if (!this.sorting) return;
+
+          this.colors.red = [];
+          this.colors.red.push(i, i + 1);
+
+          await this.sleep(time);
+
+          if (this.array[i] > this.array[i + 1]) {
+            this.array.splice(i, 2, this.array[i + 1], this.array[i]);
+            swaps += 1;
+          }
+        }
+        this.colors.green.push(sorted);
+        sorted -= 1;
+      }
+
+      this.colors.green = [];
+
+      for (let i = 0; i < this.array.length; i += 1) {
+        this.colors.red = [];
+        this.colors.red.push(i, i + 1);
+        this.colors.green.push(i);
+        await this.sleep(time);
+      }
+
+      this.colors.red = [];
+      this.sorting = false;
+    },
+
+    selectionSort() {
+      console.log('selection');
+    },
+
+    insertionSort() {
+      console.log('insertion');
+    },
+
+    mergeSort() {
+      console.log('merge');
+    },
+
+    sleep(t) {
+      return new Promise((resolve) => setTimeout(resolve, t));
     },
   },
 
@@ -117,13 +222,18 @@ export default {
     this.randomizeArray();
   },
 };
+/* eslint-enable no-await-in-loop */
 </script>
 
 <style>
+#app {
+  height: 100vh;
+  width: 100vw;
+}
 .header {
   display: flex;
   width: 100vw;
-  margin: 20px 50px;
+  padding: 20px 50px;
 }
 
 .header__container--actions {
@@ -143,4 +253,24 @@ export default {
 .header__item--algorithm {
   margin: 5px;
 }
+
+.containe {
+  margin: auto;
+  height: 80%;
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 10px;
+  /* border: 2px solid grey; */
+  /* border-radius: 10px; */
+}
+.bar {
+  /* background-color: black; */
+  min-width: 10px;
+}
+/*
+#899097
+#6c757d
+ */
 </style>
