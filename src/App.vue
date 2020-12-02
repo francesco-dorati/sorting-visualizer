@@ -37,7 +37,7 @@
           v-for="algorithm in algorithms"
           :key="algorithm.id"
           :active="selected === algorithm.id ? true : false"
-          @click="selected = algorithm.id"
+          @click="changeAlgorithm(algorithm.id)"
         >
           {{ algorithm.name }}
         </b-nav-item>
@@ -46,22 +46,17 @@
     </div>
 
     <div class="containe">
-      <!-- <span
-        v-for="item in array"
-        :key="item"
-        :style="{width: '5px', height: `${item*5}px`, margin: '0 2px', color: 'black'}"
-      >
-
-      </span> -->
       <div
         v-for="(item, index) in array"
         class="bar"
         :key="item"
         :style="{
           height: `${5.5*item}px`,
-          backgroundColor: colors.red.includes(index) ?
-            '#dc3545' : colors.green.includes(index) ?
-              '#28a745' : '#6c757d',
+          backgroundColor:
+            colors.red.includes(index) ? '#dc3545' :
+              colors.green.includes(index) ? '#28a745' :
+                colors.blue.includes(index) ? '#007bff':
+                  '#6c757d',
         }"
       >
       </div>
@@ -114,6 +109,7 @@ export default {
       colors: {
         green: [],
         red: [],
+        blue: [],
       },
       sorting: false,
     };
@@ -128,30 +124,42 @@ export default {
 
     randomizeArray() {
       this.array.sort(() => Math.random() - 0.5);
-      this.colors.red = [];
       this.colors.green = [];
+      this.colors.red = [];
+      this.colors.blue = [];
     },
 
-    start() {
-      //
-      // this.array.sort((a, b) => a - b);
+    changeAlgorithm(index) {
+      this.selected = index;
+      if (!this.sorting) {
+        this.colors.green = [];
+        this.colors.red = [];
+        this.colors.blue = [];
+      }
+    },
+
+    async start() {
       if (!this.sorting) {
         this.sorting = true;
+        this.colors.green = [];
+        this.colors.red = [];
+        this.colors.blue = [];
         switch (this.selected) {
           case 0:
-            this.bubbleSort();
+            await this.bubbleSort();
             break;
           case 1:
-            this.selectionSort();
+            await this.selectionSort();
             break;
           case 2:
-            this.insertionSort();
+            await this.insertionSort();
             break;
           case 3:
-            this.mergeSort();
+            await this.mergeSort();
             break;
           default:
         }
+        this.sorting = false;
       }
     },
 
@@ -161,9 +169,6 @@ export default {
 
     async bubbleSort() {
       const time = 5;
-
-      this.colors.green = [];
-      this.colors.red = [];
 
       let swaps = -1;
       let sorted = this.array.length - 1;
@@ -189,6 +194,12 @@ export default {
 
       this.colors.green = [];
 
+      // End Animation
+      // for (let i = 0; i < this.array.length; i += 1) {
+      //   this.colors.red = [];
+      //   this.colors.red.push(i, i + 1);
+      //   await this.sleep(time);
+      // }
       for (let i = 0; i < this.array.length; i += 1) {
         this.colors.red = [];
         this.colors.red.push(i, i + 1);
@@ -197,11 +208,47 @@ export default {
       }
 
       this.colors.red = [];
-      this.sorting = false;
     },
 
-    selectionSort() {
-      console.log('selection');
+    async selectionSort() {
+      const time = 5;
+
+      for (let i = 0; i < this.array.length; i += 1) {
+        let m = i;
+
+        this.colors.red = [i];
+        this.colors.blue = [i];
+
+        for (let j = i; j < this.array.length; j += 1) {
+          if (!this.sorting) return;
+
+          this.colors.red.splice(0, 1, j);
+
+          if (this.array[j] < this.array[m]) {
+            m = j;
+            this.colors.blue.splice(0, 1, m);
+          }
+
+          await this.sleep(time);
+        }
+
+        const tmp = this.array[m];
+        this.array.splice(m, 1, this.array[i]);
+        this.array.splice(i, 1, tmp);
+
+        this.colors.green.push(i);
+      }
+      this.colors.blue = [];
+
+      // End Animation
+      this.colors.green = [];
+      for (let i = 0; i < this.array.length; i += 1) {
+        this.colors.red = [];
+        this.colors.green.push(i);
+        this.colors.red.splice(0, 1, i);
+        await this.sleep(time);
+      }
+      this.colors.red = [];
     },
 
     insertionSort() {
