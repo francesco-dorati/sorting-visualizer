@@ -68,7 +68,7 @@
 </template>
 
 <script>
-/* eslint-disable no-await-in-loop */
+/* eslint-disable no-await-in-loop, no-param-reassign */
 import SideBar from './components/SideBar.vue';
 /*
 TODO
@@ -112,7 +112,7 @@ export default {
         blue: [],
       },
       sorting: false,
-      speed: 5,
+      speed: 8,
     };
   },
 
@@ -124,10 +124,12 @@ export default {
     },
 
     randomizeArray() {
-      this.array.sort(() => Math.random() - 0.5);
-      this.colors.green = [];
-      this.colors.red = [];
-      this.colors.blue = [];
+      if (!this.sorting) {
+        this.array.sort(() => Math.random() - 0.5);
+        this.colors.green = [];
+        this.colors.red = [];
+        this.colors.blue = [];
+      }
     },
 
     changeAlgorithm(index) {
@@ -156,7 +158,9 @@ export default {
             await this.insertionSort();
             break;
           case 3:
-            await this.mergeSort();
+            this.colors.red = [0, 0];
+            await this.mergeSort(0, this.array.length);
+            await this.endAnimation();
             break;
           default:
         }
@@ -247,8 +251,48 @@ export default {
       this.endAnimation();
     },
 
-    async mergeSort() {
-      console.log('merge');
+    async mergeSort(start, end /* exclusive */) {
+      if (!this.sorting) return;
+
+      if (start === end - 1) return;
+
+      const middle = Math.floor((start + end) / 2);
+
+      await this.mergeSort(start, middle);
+      await this.mergeSort(middle, end);
+
+      let l = start;
+      let r = middle;
+
+      const array = [];
+
+      while (l < middle && r < end) {
+        if (this.array[r] < this.array[l]) {
+          array.push(this.array[r]);
+          r += 1;
+        } else {
+          array.push(this.array[l]);
+          l += 1;
+        }
+        this.colors.red.splice(0, 2, r, l);
+        await this.sleep();
+      }
+
+      while (l < middle) {
+        array.push(this.array[l]);
+        l += 1;
+        this.colors.red.splice(1, 1, l);
+        await this.sleep();
+      }
+
+      while (r < end) {
+        array.push(this.array[r]);
+        r += 1;
+        this.colors.red.splice(0, 1, r);
+        await this.sleep();
+      }
+
+      this.array.splice(start, array.length, ...array);
     },
 
     async endAnimation() {
@@ -275,7 +319,7 @@ export default {
     this.randomizeArray();
   },
 };
-/* eslint-enable no-await-in-loop */
+/* eslint-enable no-await-in-loop, no-param-reassign  */
 </script>
 
 <style>
