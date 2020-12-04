@@ -41,32 +41,31 @@ const insertionSort = (array) => {
     })
 };
 
-const mergeSort = (array) => {
-  if (array.length == 1) return array;
+const mergeSort = (array, start = 0, end = array.length /* exclusive */) => {
+  if (start === end - 1) return; // sorted
 
-  const half = Math.floor(array.length/2);
+  const middle = Math.floor((start + end) / 2);
 
   // Sort each part
-  const left = mergeSort(array.slice(0, half));
-  const right = mergeSort(array.slice(half));
+  mergeSort(array, start, middle);
+  mergeSort(array, middle, end);
 
   const tmp = [];
-  let l = 0, r = 0;
+  let l = start, r = middle;
 
   // Merge the two parts
-  while (l < left.length || r < right.length) {
-    if (l !== left.length && (r === right.length || left[l] < right[r])) {
-      tmp.push(left[l++]);
+  while (l < middle && r < end) {
+    if (array[r] < array[l]) {
+      tmp.push(array[r++]);
     } else {
-      tmp.push(right[r++]);
+      tmp.push(array[l++]);
     }
   }
 
-  for (i in tmp) {
-    array[i] = tmp[i];
-  }
+  while (l < middle) tmp.push(array[l++]);
+  while (r < end) tmp.push(array[r++]);
 
-  return array;
+  array.splice(start, tmp.length, ...tmp);
 }
 
 const array = [4, 3, 1, 2, 0, 5];

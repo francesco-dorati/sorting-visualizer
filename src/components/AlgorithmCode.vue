@@ -1182,6 +1182,240 @@
       <!-- Python -->
       <div v-if="language == 1">
         <span>
+          <span class="purple">def </span>
+          <span class="blue">merge_sort</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>: </span>
+          <span class="blue">list</span>
+          <span>, </span>
+          <span class="red">start</span>
+          <span>: </span>
+          <span class="blue">int </span>
+          <span> = </span>
+          <span class="orange">0</span>
+          <span>, </span>
+          <span class="red">end</span>
+          <span>: </span>
+          <span class="blue">int </span>
+          <span> = </span>
+          <span class="orange">None</span>
+          <span>):</span>
+        </span><br/>
+        <span class="tab-1">
+          <span class="purple">if </span>
+          <span class="red">end </span>
+          <span class="purple">is </span>
+          <span class="orange">None</span>
+          <span>:</span>
+        </span><br/>
+        <span class="tab-2">
+          <span class="red">end </span>
+          <span> = </span>
+          <span class="blue">len</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>)</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span class="purple">if </span>
+          <span class="red">start </span>
+          <span> == </span>
+          <span class="red">end </span>
+          <span>- </span>
+          <span class="orange">1</span>
+          <span>: </span>
+          <span class="purple">return </span>
+          <span class="grey"># sorted</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span>middle </span>
+          <span> = </span>
+          <span class="blue">floor</span>
+          <span>((</span>
+          <span class="red">start </span>
+          <span>+ </span>
+          <span class="red">end</span>
+          <span>)</span>
+          <span>/</span>
+          <span class="orange">2</span>
+          <span>)</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span class="grey"># Sort each part</span>
+        </span><br/>
+        <span class="tab-1">
+          <span class="blue">merge_sort</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>, </span>
+          <span class="red">start</span>
+          <span>, </span>
+          <span>middle</span>
+          <span>)</span>
+        </span><br/>
+        <span class="tab-1">
+          <span class="blue">merge_sort</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>, </span>
+          <span>middle</span>
+          <span>, </span>
+          <span class="red">end</span>
+          <span>)</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span>tmp</span>
+          <span>, </span>
+          <span>l</span>
+          <span>, </span>
+          <span>r </span>
+          <span> = </span>
+          <span>[]</span>
+          <span>, </span>
+          <span class="red">start</span>
+          <span>, </span>
+          <span class="red">middle</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span class="grey"># Merge the two parts</span>
+        </span><br/>
+        <span class="tab-1">
+          <span class="purple">while </span>
+          <span>l </span>
+          <span>&lt; </span>
+          <span>middle </span>
+          <span class="purple">and </span>
+          <span>r </span>
+          <span>&lt; </span>
+          <span class="red">end</span>
+          <span>:</span>
+        </span><br/>
+        <span class="tab-2">
+          <span class="purple">if </span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>r</span>
+          <span>] </span>
+          <span>&lt; </span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>l</span>
+          <span>]</span>
+          <span>:</span>
+        </span><br/>
+        <span class="tab-3">
+          <span>tmp</span>
+          <span>.</span>
+          <span class="blue">append</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>r</span>
+          <span>])</span>
+        </span><br/>
+        <span class="tab-3">
+          <span>r </span>
+          <span>+= </span>
+          <span class="orange">1</span>
+        </span><br/>
+        <span class="tab-2">
+          <span class="purple">else</span>
+          <span>:</span>
+        </span><br/>
+        <span class="tab-3">
+          <span>tmp</span>
+          <span>.</span>
+          <span class="blue">append</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>l</span>
+          <span>])</span>
+        </span><br/>
+        <span class="tab-3">
+          <span>l </span>
+          <span>+= </span>
+          <span class="orange">1</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span class="purple">while </span>
+          <span>l </span>
+          <span>&lt; </span>
+          <span>middle</span>
+          <span>:</span>
+        </span><br/>
+        <span class="tab-2">
+          <span>tmp</span>
+          <span>.</span>
+          <span class="blue">append</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>l</span>
+          <span>])</span>
+        </span><br/>
+        <span class="tab-2">
+          <span>l </span>
+          <span>+= </span>
+          <span class="orange">1</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span class="purple">while </span>
+          <span>r </span>
+          <span>&lt; </span>
+          <span class="red">end</span>
+          <span>:</span>
+        </span><br/>
+        <span class="tab-2">
+          <span>tmp</span>
+          <span>.</span>
+          <span class="blue">append</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>r</span>
+          <span>])</span>
+        </span><br/>
+        <span class="tab-2">
+          <span>r </span>
+          <span>+= </span>
+          <span class="orange">1</span>
+        </span><br/>
+        <br/>
+        <span class="tab-1">
+          <span class="purple">for </span>
+          <span>i </span>
+          <span class="purple">in </span>
+          <span class="blue">range</span>
+          <span>(</span>
+          <span class="blue">len</span>
+          <span>(</span>
+          <span>tmp</span>
+          <span>)):</span>
+        </span><br/>
+        <span class="tab-2">
+          <span class="red">array</span>
+          <span>[</span>
+          <span class="red">start </span>
+          <span>+ </span>
+          <span>i</span>
+          <span>] </span>
+          <span>= </span>
+          <span>tmp</span>
+          <span>[</span>
+          <span>i</span>
+          <span>]</span>
+        </span><br/>
+
+        <!-- <span>
           <span class="purple">from </span>
           <span>math </span>
           <span class="purple">import </span>
@@ -1373,7 +1607,7 @@
         <span class="tab-1">
           <span class="purple">return </span>
           <span class="red">array</span>
-        </span><br/>
+        </span><br/> -->
       </div>
 
       <!-- JavaScript -->
@@ -1384,6 +1618,17 @@
           <span> = </span>
           <span>(</span>
           <span class="red">array</span>
+          <span>, </span>
+          <span class="red">start </span>
+          <span> = </span>
+          <span class="orange">0</span>
+          <span>, </span>
+          <span class="red">end </span>
+          <span> = </span>
+          <span class="red">array</span>
+          <span>.</span>
+          <span class="blue">length </span>
+          <span class="grey">/* exclusive */</span>
           <span>) </span>
           <span class="purple"> => </span>
           <span>{</span>
@@ -1391,81 +1636,75 @@
         <span class="tab-1">
           <span class="purple">if </span>
           <span>(</span>
-          <span class="red">array</span>
-          <span>.</span>
-          <span class="blue">length </span>
-          <span> == </span>
+          <span class="red">start </span>
+          <span> === </span>
+          <span class="red">end </span>
+          <span> - </span>
           <span class="orange">1</span>
           <span>) </span>
-          <span class="purple">return </span>
-          <span class="red">array</span>
+          <span class="purple">return</span>
           <span>; </span>
           <span class="grey">// sorted</span>
         </span><br/>
         <br/>
         <span class="tab-1">
           <span class="purple">const </span>
-          <span>half </span>
+          <span>middle </span>
           <span> = </span>
           <span>Math</span>
           <span>.</span>
           <span class="blue">floor</span>
-          <span>(</span>
-          <span class="red">array</span>
-          <span>.</span>
-          <span class="blue">length</span>
-          <span>/</span>
+          <span>((</span>
+          <span class="red">start </span>
+          <span>+ </span>
+          <span class="red">end</span>
+          <span>) </span>
+          <span>/ </span>
           <span class="orange">2</span>
-          <span>);</span>
+          <span>)</span>
+          <span>;</span>
         </span><br/>
         <br/>
         <span class="tab-1">
           <span class="grey">// Sort each part</span>
         </span><br/>
         <span class="tab-1">
-          <span class="purple">const </span>
-          <span>left </span>
-          <span> = </span>
           <span class="blue">mergeSort</span>
           <span>(</span>
           <span class="red">array</span>
-          <span>.</span>
-          <span class="blue">slice</span>
-          <span>(</span>
-          <span class="orange">0</span>
           <span>, </span>
-          <span>half</span>
-          <span>));</span>
+          <span class="red">start</span>
+          <span>, </span>
+          <span>middle</span>
+          <span>);</span>
         </span><br/>
         <span class="tab-1">
-          <span class="purple">const </span>
-          <span>right </span>
-          <span> = </span>
           <span class="blue">mergeSort</span>
           <span>(</span>
           <span class="red">array</span>
-          <span>.</span>
-          <span class="blue">slice</span>
-          <span>(</span>
-          <span>half</span>
-          <span>));</span>
+          <span>, </span>
+          <span>middle</span>
+          <span>, </span>
+          <span class="red">end</span>
+          <span>);</span>
         </span><br/>
         <br/>
         <span class="tab-1">
           <span class="purple">const </span>
           <span>tmp </span>
           <span> = </span>
-          <span>[];</span>
+          <span>[]</span>
+          <span>;</span>
         </span><br/>
         <span class="tab-1">
           <span class="purple">let </span>
           <span>l </span>
           <span> = </span>
-          <span class="orange">0</span>
+          <span class="red">start</span>
           <span>, </span>
           <span>r </span>
           <span> = </span>
-          <span class="orange">0</span>
+          <span>middle</span>
           <span>;</span>
         </span><br/>
         <br/>
@@ -1477,51 +1716,34 @@
           <span>(</span>
           <span>l </span>
           <span>&lt; </span>
-          <span>left</span>
-          <span>.</span>
-          <span class="blue">length </span>
-          <span class="purple">|| </span>
+          <span>middle </span>
+          <span>&& </span>
           <span>r </span>
           <span>&lt; </span>
-          <span>right</span>
-          <span>.</span>
-          <span class="blue">length</span>
+          <span class="red">end</span>
           <span>) {</span>
         </span><br/>
         <span class="tab-2">
           <span class="purple">if </span>
           <span>(</span>
-          <span>l </span>
-          <span>!== </span>
-          <span>left</span>
-          <span>.</span>
-          <span class="blue">length </span>
-          <span class="purple">&& </span>
-          <span>(</span>
-          <span>r </span>
-          <span>=== </span>
-          <span>right</span>
-          <span>.</span>
-          <span class="blue">length </span>
-          <span class="purple">|| </span>
-          <span>left</span>
-          <span>[</span>
-          <span>l</span>
-          <span>] </span>
-          <span>&lt; </span>
-          <span>right</span>
+          <span class="red">array</span>
           <span>[</span>
           <span>r</span>
-          <span>])) {</span>
+          <span>] </span>
+          <span>&lt; </span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>l</span>
+          <span>]) {</span>
         </span><br/>
         <span class="tab-3">
           <span>tmp</span>
           <span>.</span>
           <span class="blue">push</span>
           <span>(</span>
-          <span>left</span>
+          <span class="red">array</span>
           <span>[</span>
-          <span>l</span>
+          <span>r</span>
           <span>++</span>
           <span>]);</span>
         </span><br/>
@@ -1535,9 +1757,9 @@
           <span>.</span>
           <span class="blue">push</span>
           <span>(</span>
-          <span>right</span>
+          <span class="red">array</span>
           <span>[</span>
-          <span>r</span>
+          <span>l</span>
           <span>++</span>
           <span>]);</span>
         </span><br/>
@@ -1549,32 +1771,53 @@
         </span><br/>
         <br/>
         <span class="tab-1">
-          <span class="purple">for </span>
+          <span class="purple">while </span>
           <span>(</span>
-          <span>i </span>
-          <span class="purple">in </span>
+          <span>l </span>
+          <span>&lt; </span>
+          <span>middle</span>
+          <span>) </span>
           <span>tmp</span>
-          <span>) {</span>
-        </span><br/>
-        <span class="tab-2">
+          <span>.</span>
+          <span class="blue">push</span>
+          <span>(</span>
           <span class="red">array</span>
           <span>[</span>
-          <span>i</span>
-          <span>] </span>
-          <span> = </span>
-          <span>tmp</span>
-          <span>[</span>
-          <span>i</span>
-          <span>];</span>
+          <span>l</span>
+          <span>++</span>
+          <span>]);</span>
         </span><br/>
         <span class="tab-1">
-          <span>}</span>
+          <span class="purple">while </span>
+          <span>(</span>
+          <span>r </span>
+          <span>&lt; </span>
+          <span class="red">end</span>
+          <span>) </span>
+          <span>tmp</span>
+          <span>.</span>
+          <span class="blue">push</span>
+          <span>(</span>
+          <span class="red">array</span>
+          <span>[</span>
+          <span>r</span>
+          <span>++</span>
+          <span>]);</span>
         </span><br/>
         <br/>
         <span class="tab-1">
-          <span class="purple">return </span>
           <span class="red">array</span>
-          <span>;</span>
+          <span>.</span>
+          <span class="blue">splice</span>
+          <span>(</span>
+          <span class="red">start</span>
+          <span>, </span>
+          <span>tmp</span>
+          <span>.</span>
+          <span class="blue">length</span>
+          <span>, </span>
+          <span>...tmp</span>
+          <span>);</span>
         </span><br/>
         <span>
           <span>}</span>

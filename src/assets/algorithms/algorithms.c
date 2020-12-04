@@ -49,8 +49,7 @@ void selectionSort(int n, int array[]) {
     array[i] = tmp;
   }
 }
-// {4, 3, 1, 6, 2, 0, 5} i1 
-// {3, 4, 1, 6, 2, 0, 5} i2
+
 void insertionSort(int n, int array[]) {
   
   for (int i = 1; i < n; i++) {

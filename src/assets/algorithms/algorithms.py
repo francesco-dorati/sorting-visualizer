@@ -36,34 +36,41 @@ def insertion_sort(array: list):
 
 from math import floor
 
-def merge_sort(array: list):
-  if len(array) == 1:
-    return array # sorted
+def merge_sort(array: list, start: int = 0, end: int = None):
+  if end is None:
+    end = len(array)
+    
+  if start == end - 1: return # sorted
   
-  half = floor(len(array)/2)
+  middle = floor((start + end)/2)
 
   # Sort each part
-  left = merge_sort(array[0:half])
-  right = merge_sort(array[half:])
+  merge_sort(array, start, middle)
+  merge_sort(array, middle, end)
 
-  tmp, l, r, lenl, lenr = [], 0, 0, len(left), len(right)
+  tmp, l, r = [], start, middle
 
   # Merge the two parts
-  while l < lenl or r < lenr:
-    if l != lenl and (r == lenr or left[l] < right[r]):
-      tmp.append(left[l])
-      l += 1
+  while l < middle and r < end:
+    if array[r] < array[l]:
+      tmp.append(array[r])
+      r += 1
     else:
-      tmp.append(right[r])
-      r += 1 
+      tmp.append(array[l])
+      l += 1 
 
-  for i in range(len(array)):
-    array[i] = tmp[i]
+  while l < middle:
+    tmp.append(array[l])
+    l += 1
 
-  return array
+  while r < end:
+    tmp.append(array[r])
+    r += 1
+
+  for i in range(len(tmp)):
+    array[start + i] = tmp[i]
 
 
 array = [4, 3, 1, 6, 2, 0, 5]
-# array = [2, 3]
 merge_sort(array)
 print(array)
