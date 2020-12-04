@@ -14,7 +14,7 @@
 
           <footer class="sidebar__description--footer blockquote-footer">
             <cite title="Source Title">
-              <a :href="current.href" target="_blank" class="">Wikipedia</a>
+              <a :href="current.href" target="_blank">Wikipedia</a>
             </cite>
           </footer>
 
@@ -31,7 +31,6 @@
             :key="index"
             :title="language"
           >
-             <!-- ADD OVERFLOW SCROLL -->
             <AlgorithmCode :algorithm="current.id" :language="index"/>
           </b-tab>
         </b-tabs>

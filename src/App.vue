@@ -72,9 +72,7 @@
 import SideBar from './components/SideBar.vue';
 /*
 TODO
-- change from class to css
 - add dark theme
-
 */
 
 export default {
