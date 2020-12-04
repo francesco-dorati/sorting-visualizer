@@ -1,4 +1,4 @@
-# Sorting Visualizer
+# [Sorting Visualizer](https://francesco-dorati.github.io/sorting-visualizer/)
 
 ## Descrtiption
 This project allows you to **visualize** various **sorting algorithms**:
