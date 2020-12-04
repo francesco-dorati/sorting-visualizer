@@ -106,69 +106,65 @@ export default {
       ],
       selected: 0,
       array: [],
+      sorting: false,
       colors: {
         green: [],
         red: [],
         blue: [],
       },
-      sorting: false,
       speed: 8,
     };
   },
 
   methods: {
     initializeArray() {
-      for (let i = 1; i <= 100; i += 1) {
-        this.array.push(i);
-      }
+      for (let i = 1; i <= 100; i += 1) this.array.push(i);
     },
 
     randomizeArray() {
-      if (!this.sorting) {
-        this.array.sort(() => Math.random() - 0.5);
-        this.colors.green = [];
-        this.colors.red = [];
-        this.colors.blue = [];
-      }
+      if (this.sorting) this.stop();
+
+      this.resetColors();
+
+      this.array.sort(() => Math.random() - 0.5);
     },
 
     changeAlgorithm(index) {
       this.selected = index;
-      if (!this.sorting) {
-        this.colors.green = [];
-        this.colors.red = [];
-        this.colors.blue = [];
-      }
+
+      if (!this.sorting) this.resetColors();
     },
 
     async start() {
-      if (!this.sorting) {
-        this.sorting = true;
-        this.colors.green = [];
-        this.colors.red = [];
-        this.colors.blue = [];
-        switch (this.selected) {
-          case 0:
-            await this.bubbleSort();
-            break;
-          case 1:
-            await this.selectionSort();
-            break;
-          case 2:
-            await this.insertionSort();
-            break;
-          case 3:
-            this.colors.red = [0, 0];
-            await this.mergeSort(0, this.array.length);
-            await this.endAnimation();
-            break;
-          default:
-        }
-        this.sorting = false;
-      }
-    },
+      if (this.sorting) return;
 
-    stop() {
+      this.resetColors();
+
+      this.sorting = true;
+
+      switch (this.selected) {
+        case 0:
+          await this.bubbleSort();
+          break;
+
+        case 1:
+          await this.selectionSort();
+          break;
+
+        case 2:
+          await this.insertionSort();
+          break;
+
+        case 3:
+          this.colors.red = [0, 0];
+          await this.mergeSort(0, this.array.length)
+            .then((mess) => { if (mess) this.stop(); });
+          if (this.sorting) await this.endAnimation();
+          break;
+
+        default:
+      }
+
       this.sorting = false;
     },
 
@@ -181,7 +177,7 @@ export default {
         for (let i = 0; i < sorted; i += 1) {
           if (!this.sorting) return;
 
-          this.colors.red = [];
+          this.resetColors(['red']);
           this.colors.red.push(i, i + 1);
 
           if (this.array[i] > this.array[i + 1]) {
@@ -191,8 +187,11 @@ export default {
 
           await this.sleep();
         }
+
         this.colors.green.push(sorted);
         sorted -= 1;
+
+        if (!this.sorting) return;
       }
 
       this.endAnimation();
@@ -217,6 +216,8 @@ export default {
 
           await this.sleep();
         }
+
+        if (!this.sorting) return;
 
         const tmp = this.array[m];
         this.array.splice(m, 1, this.array[i]);
@@ -245,6 +246,7 @@ export default {
 
           this.colors.red.splice(0, 1, j);
           await this.sleep();
+          if (!this.sorting) return;
         }
       }
 
@@ -252,9 +254,9 @@ export default {
     },
 
     async mergeSort(start, end /* exclusive */) {
-      if (!this.sorting) return;
+      if (!this.sorting) return 1;
 
-      if (start === end - 1) return;
+      if (start === end - 1) return 0;
 
       const middle = Math.floor((start + end) / 2);
 
@@ -274,43 +276,72 @@ export default {
           array.push(this.array[l]);
           l += 1;
         }
+
         this.colors.red.splice(0, 2, r, l);
         await this.sleep();
+
+        if (!this.sorting) return 1;
       }
 
       while (l < middle) {
         array.push(this.array[l]);
         l += 1;
+
         this.colors.red.splice(1, 1, l);
         await this.sleep();
+
+        if (!this.sorting) return 1;
       }
 
       while (r < end) {
         array.push(this.array[r]);
         r += 1;
+
         this.colors.red.splice(0, 1, r);
         await this.sleep();
+
+        if (!this.sorting) return 1;
       }
 
       this.array.splice(start, array.length, ...array);
+
+      return 0;
     },
 
     async endAnimation() {
-      this.colors.blue = [];
-      this.colors.green = [];
+      this.resetColors(['green', 'blue']);
 
       for (let i = 0; i < this.array.length; i += 1) {
-        this.colors.red = [];
+        this.resetColors(['red']);
         this.colors.green.push(i);
         this.colors.red.splice(0, 1, i);
+
         await this.sleep();
       }
 
-      this.colors.red = [];
+      this.resetColors(['red']);
+    },
+
+    stop() {
+      this.sorting = false;
+
+      this.resetColors();
     },
 
     sleep() {
       return new Promise((resolve) => setTimeout(resolve, this.speed));
+    },
+
+    resetColors(colors = ['red', 'green', 'blue']) {
+      if (colors.includes('red')) {
+        this.colors.red = [];
+      }
+      if (colors.includes('green')) {
+        this.colors.green = [];
+      }
+      if (colors.includes('blue')) {
+        this.colors.blue = [];
+      }
     },
   },
 
