@@ -1,24 +1,34 @@
-# sorting-visualizer
+# Sorting Visualizer
 
-## Project setup
+## Descrtiption
+This project allows you to **visualize** various **sorting algorithms**:
+- Bubble Sort
+- Selection Sort
+- Insertion Sort
+- Merge Sort
+
+Every algorithm will be accompanied by information regarding its own **functioning** and **time complexity**.  
+We will also provide **code examples** with various porgramming languages including **C**, **Python** and **Javascript**.
+
+## Usage
+### Install dependencies
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compile for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compile for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Contributing
+Pull requests are welcome.  
+For major changes, please open an issue first to discuss what you would like to change.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
